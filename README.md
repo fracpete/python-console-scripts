@@ -10,7 +10,7 @@ executable scripts when installed via *pip*.
 
 ## Examples
 
-* [no dependencies](no_deps)
-* [simple dependency](simple_dep)
-* [complex dependencies](complex_deps)
+* [no dependencies](1_no_deps)
+* [simple dependency](2_simple_dep)
+* [complex dependencies](3_complex_deps)
 

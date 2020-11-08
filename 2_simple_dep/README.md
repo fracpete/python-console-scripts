@@ -1,7 +1,7 @@
-# python-console-scripts
+# python-console-scripts (simple depdendency)
 Example repo for specifying console scripts in Python.
 
-The example code uses no external dependencies and prints text in the console.
+The example code uses [matplotlib](https://matplotlib.org/) to display text in a figure.
 
 
 ## Testing
@@ -58,9 +58,9 @@ Using [stdeb](https://github.com/astraw/stdeb), you can build Debian packages
   
   ```commandline
    new Debian package, version 2.0.
-   size 2848 bytes: control archive=1060 bytes.
-       275 bytes,    10 lines      control              
-       765 bytes,     8 lines      md5sums              
+   size 3200 bytes: control archive=1084 bytes.
+       295 bytes,    10 lines      control              
+       877 bytes,     9 lines      md5sums              
        179 bytes,     9 lines   *  postinst             #!/bin/sh
        429 bytes,    12 lines   *  prerm                #!/bin/sh
    Package: python3-mysuperduperproject
@@ -68,9 +68,33 @@ Using [stdeb](https://github.com/astraw/stdeb), you can build Debian packages
    Version: 0.0.1-1
    Architecture: all
    Maintainer: Peter Reutemann <fracpete@gmail.com>
-   Installed-Size: 21
-   Depends: python3:any (>= 3.3.2-2~)
+   Installed-Size: 22
+   Depends: python3-matplotlib, python3:any (>= 3.3.2-2~)
    Section: python
    Priority: optional
    Description: My super duper Project.
+  ```
+
+  **Note:** The *python3-matplotlib* Debian dependency got automatically added.
+  
+* when simulating an **apt install** with:
+  
+  ```commandline
+  gdebi --apt-line deb_dist/python3-mysuperduperproject_0.0.1-1_all.deb
+  ```
+  
+  You get the following output (with unsatisfiable dependency *python3-docker-banner-gen*):
+  
+  ```commandline
+  Reading package lists... Done
+  Building dependency tree        
+  Reading state information... Done
+  Reading state information... Done
+  python3-matplotlib python3-numpy
+  ```
+  
+  You can then install the dependencies with:
+  
+  ```commandline
+  sudo apt-get install python3-matplotlib python3-numpy
   ```

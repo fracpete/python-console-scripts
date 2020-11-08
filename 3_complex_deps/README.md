@@ -1,4 +1,4 @@
-# python-console-scripts
+# python-console-scripts (complex dependencies)
 Example repo for specifying console scripts in Python.
 
 The example code uses Java using [docker-banner-gen](https://pypi.org/project/docker-banner-gen/) 
