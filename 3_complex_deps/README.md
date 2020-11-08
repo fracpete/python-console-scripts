@@ -98,7 +98,7 @@ Using [stdeb](https://github.com/astraw/stdeb), you can build Debian packages
 
   You will need to install this package manually (if even available as Debian package).
 
-### py2deb
+### py2deb (Debian)
 
 Using [py2deb](https://py2deb.readthedocs.io/en/latest/readme.html), you can
 build Debian packages (you need to install the library with pip in your virtual

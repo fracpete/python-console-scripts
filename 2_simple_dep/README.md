@@ -99,7 +99,7 @@ Using [stdeb](https://github.com/astraw/stdeb), you can build Debian packages
   sudo apt-get install python3-matplotlib python3-numpy
   ```
 
-### py2deb
+### py2deb (Debian)
 
 Fails to generate a Debian package (at time of writing, i.e., 2020/11/08). 
 This is possibly due to py2deb not being able to handle wheel archives 

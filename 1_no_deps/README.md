@@ -76,7 +76,7 @@ Using [stdeb](https://github.com/astraw/stdeb), you can build Debian packages
    Description: My super duper Project.
   ```
 
-### py2deb
+### py2deb (Debian)
 
 Using [py2deb](https://py2deb.readthedocs.io/en/latest/readme.html), you can
 build Debian packages (you need to install the library with pip in your virtual
