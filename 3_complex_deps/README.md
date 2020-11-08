@@ -97,3 +97,85 @@ Using [stdeb](https://github.com/astraw/stdeb), you can build Debian packages
   ```
 
   You will need to install this package manually (if even available as Debian package).
+
+### py2deb
+
+Using [py2deb](https://py2deb.readthedocs.io/en/latest/readme.html), you can
+build Debian packages (you need to install the library with pip in your virtual
+environment first).
+
+* install py2deb
+
+  ```commandline
+  ./venv/bin/pip install py2deb
+  ```
+
+* clean up previous build
+
+  ```commandline
+  rm -f /tmp/*.deb
+  ```
+
+* build package (numpy dependency needs to be specified as system package, 
+  otherwise you end up with an error message stating: *`setup.py bdist` 
+  is not supported*)
+
+  ```commandline
+  ./venv/bin/py2deb --use-system-package=numpy,python3-numpy -r /tmp -- .
+  ```
+  
+  **Note:** If your requirements are listed in `requirements.txt`, then use the
+  following instead:
+  
+  ```commandline
+  ./venv/bin/py2deb --use-system-package=numpy,python3-numpy -r /tmp -- -r requirements.txt
+  ```
+
+* print information on package:
+
+  ```commandline
+  dpkg -I /tmp/python3-mysuperduperproject_0.0.1_all.deb
+  ```
+  
+  should output something like this:
+  
+  ```commandline
+   new Debian package, version 2.0.
+   size 6096 bytes: control archive=4092 bytes.
+       332 bytes,     9 lines      control              
+     15044 bytes,   397 lines   *  postinst             #!/usr/bin/python3.7
+     15014 bytes,   397 lines   *  prerm                #!/usr/bin/python3.7
+   Package: python3-mysuperduperproject
+   Version: 0.0.1
+   Maintainer: Peter Reutemann <fracpete@gmail.com>
+   Description: Python package mysuperduperproject converted by py2deb on November 8, 2020 at 13:35
+   Architecture: all
+   Depends: python3-docker-banner-gen, python3-numpy, python3.7
+   Priority: optional
+   Section: python
+   Installed-Size: 116
+  ```
+
+  **Note:** Uses the Python version of the virtual environment that py2deb belongs to
+  as dependency. The *docker-banner-gen* is automatically assumed to be available
+  as package *python3-docker-banner-gen*. 
+  
+* when simulating an **apt install** with:
+  
+  ```commandline
+  gdebi --apt-line /tmp/python3-mysuperduperproject_0.0.1_all.deb
+  ```
+  
+  You get the following output (with unsatisfiable dependency *python3-docker-banner-gen*):
+  
+  ```commandline
+  Reading package lists... Done
+  Building dependency tree        
+  Reading state information... Done
+  Reading state information... Done
+  This package is uninstallable
+  Dependency is not satisfiable: python3-docker-banner-gen
+  ```
+
+  You will need to install this package manually (if even available as Debian package).
+  
