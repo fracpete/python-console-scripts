@@ -1,5 +1,6 @@
 # python-console-scripts
-Example repo for specifying console scripts in Python.
+Example repo for specifying console scripts in Python 
+and building Linux packages.
 
 ## setuptools
 
@@ -7,22 +8,9 @@ Example repo for specifying console scripts in Python.
 allows the specification of *console_scripts* entry points, which get turned into 
 executable scripts when installed via *pip*.
 
-## Testing
+## Examples
 
-* set up a virtual environment
+* [no dependencies](no_deps)
+* [simple dependency](simple_dep)
+* [complex dependencies](complex_deps)
 
-  ```
-  virtualenv -p /usr/bin/python3.7 venv
-  ```
-
-* install the code (from within the directory of this README)
-
-  ```
-  ./venv/bin/pip install .
-  ```
-
-* and now you can run the [hello.py](src/msdp/hello.py) script using:
-
-  ```
-  ./venv/bin/msdp-hello --help
-  ```

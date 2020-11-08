@@ -133,4 +133,7 @@ dmypy.json
 *.swp
 *.bak
 blah*
-
+deb_dist/
+*.tar.gz
+.idea/
+*.iml
