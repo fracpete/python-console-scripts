@@ -157,7 +157,7 @@ for multiple platforms.
   rm -f python3-mysuperduperproject*
   ```
   
-* build package
+* build package (use `--python-pip` to avoid error message `Need executable 'easy_install' to convert python to deb`)
 
   ```commandline
   fpm -s python -t deb --python-pip /usr/bin/pip3 --python-package-name-prefix python3 .
