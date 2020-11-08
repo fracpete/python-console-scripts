@@ -178,4 +178,132 @@ environment first).
   ```
 
   You will need to install this package manually (if even available as Debian package).
+
+  
+### fpm
+
+[fpm](https://github.com/jordansissel/fpm) (effing package management; 
+[documentation](https://fpm.readthedocs.io/en/latest/)) allows package generation 
+for multiple platforms.
+
+* install the tool
+
+  ```commandline
+  sudo apt-get install ruby ruby-dev rubygems build-essential
+  sudo gem install --no-document fpm
+  ```  
+
+#### Debian
+  
+* clean up previous build
+
+  ```commandline
+  rm -f python3-mysuperduperproject*
+  ```
+  
+* build package
+
+  ```commandline
+  fpm -s python -t deb --python-pip /usr/bin/pip3 --python-package-name-prefix python3 .
+  ```
+  
+* print information on package:
+
+  ```commandline
+  dpkg -I python3-mysuperduperproject_0.0.1_all.deb
+  ```
+  
+  should output something like this:
+  
+  ```commandline
+   new Debian package, version 2.0.
+   size 3456 bytes: control archive=816 bytes.
+       289 bytes,    12 lines      control              
+      1228 bytes,    12 lines      md5sums              
+   Package: python3-mysuperduperproject
+   Version: 0.0.1
+   License: MIT License
+   Vendor: none
+   Architecture: all
+   Maintainer: <fracpete@metal>
+   Installed-Size: 3
+   Depends: python3-numpy, python3-docker-banner-gen
+   Section: default
+   Priority: extra
+   Homepage: UNKNOWN
+   Description: My super duper Project.
+  ```
+
+  **Note:** The *docker-banner-gen* is automatically assumed to be available
+  as package *python3-docker-banner-gen*. 
+  
+* when simulating an **apt install** with:
+  
+  ```commandline
+  gdebi --apt-line python3-mysuperduperproject_0.0.1_all.deb
+  ```
+  
+  You get the following output (with unsatisfiable dependency *python3-docker-banner-gen*):
+  
+  ```commandline
+  Reading package lists... Done
+  Building dependency tree        
+  Reading state information... Done
+  Reading state information... Done
+  This package is uninstallable
+  Dependency is not satisfiable: python3-docker-banner-gen
+  ```
+
+  You will need to install this package manually (if even available as Debian package).
+
+#### RPM
+  
+* clean up previous build
+
+  ```commandline
+  rm -f python3-mysuperduperproject*
+  ```
+  
+* build package
+
+  ```commandline
+  fpm -s python -t rpm --python-pip /usr/bin/pip3 --python-package-name-prefix python3 .
+  ```
+
+* print information on package:
+
+  ```commandline
+  rpm -qpiR python3-mysuperduperproject-0.0.1-1.noarch.rpm
+  ```
+  
+  should output something like this:
+  
+  ```commandline
+  Name        : python3-mysuperduperproject
+  Version     : 0.0.1
+  Release     : 1
+  Architecture: noarch
+  Install Date: (not installed)
+  Group       : default
+  Size        : 3720
+  License     : MIT License
+  Signature   : (none)
+  Source RPM  : python3-mysuperduperproject-0.0.1-1.src.rpm
+  Build Date  : Sun 08 Nov 2020 16:33:27 NZDT
+  Build Host  : metal
+  Relocations : / 
+  Packager    : <fracpete@metal>
+  Vendor      : none
+  URL         : UNKNOWN
+  Summary     : My super duper Project.
+  Description :
+  My super duper Project.
+  python3-docker-banner-gen
+  python3-numpy
+  rpmlib(CompressedFileNames) <= 3.0.4-1
+  rpmlib(PayloadFilesHavePrefix) <= 4.0-1
+  ```
+
+  **Note:** The *docker-banner-gen* is automatically assumed to be available
+  as package *python3-docker-banner-gen*. 
   

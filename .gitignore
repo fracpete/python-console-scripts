@@ -137,3 +137,6 @@ deb_dist/
 *.tar.gz
 .idea/
 *.iml
+*.tar.gz
+*.deb
+*.rpm

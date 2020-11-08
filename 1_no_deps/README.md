@@ -135,3 +135,102 @@ environment first).
   **Note:** Uses the Python version of the virtual environment that py2deb belongs to
   as dependency.
   
+  
+### fpm
+
+[fpm](https://github.com/jordansissel/fpm) (effing package management; 
+[documentation](https://fpm.readthedocs.io/en/latest/)) allows package generation 
+for multiple platforms.
+
+* install the tool
+
+  ```commandline
+  sudo apt-get install ruby ruby-dev rubygems build-essential
+  sudo gem install --no-document fpm
+  ```  
+
+#### Debian
+  
+* clean up previous build
+
+  ```commandline
+  rm -f python3-mysuperduperproject*
+  ```
+  
+* build package
+
+  ```commandline
+  fpm -s python -t deb --python-pip /usr/bin/pip3 --python-package-name-prefix python3 .
+  ```
+  
+* print information on package:
+
+  ```commandline
+  dpkg -I python3-mysuperduperproject_0.0.1_all.deb
+  ```
+  
+  should output something like this:
+  
+  ```commandline
+   new Debian package, version 2.0.
+   size 3198 bytes: control archive=755 bytes.
+       239 bytes,    11 lines      control              
+      1108 bytes,    11 lines      md5sums              
+   Package: python3-mysuperduperproject
+   Version: 0.0.1
+   License: MIT License
+   Vendor: none
+   Architecture: all
+   Maintainer: <fracpete@metal>
+   Installed-Size: 3
+   Section: default
+   Priority: extra
+   Homepage: UNKNOWN
+   Description: My super duper Project.
+  ```
+
+#### RPM
+  
+* clean up previous build
+
+  ```commandline
+  rm -f python3-mysuperduperproject*
+  ```
+  
+* build package
+
+  ```commandline
+  fpm -s python -t rpm --python-pip /usr/bin/pip3 --python-package-name-prefix python3 .
+  ```
+
+* print information on package:
+
+  ```commandline
+  rpm -qpiR python3-mysuperduperproject-0.0.1-1.noarch.rpm
+  ```
+  
+  should output something like this:
+  
+  ```commandline
+  Name        : python3-mysuperduperproject
+  Version     : 0.0.1
+  Release     : 1
+  Architecture: noarch
+  Install Date: (not installed)
+  Group       : default
+  Size        : 3368
+  License     : MIT License
+  Signature   : (none)
+  Source RPM  : python3-mysuperduperproject-0.0.1-1.src.rpm
+  Build Date  : Sun 08 Nov 2020 16:23:38 NZDT
+  Build Host  : metal
+  Relocations : / 
+  Packager    : <fracpete@metal>
+  Vendor      : none
+  URL         : UNKNOWN
+  Summary     : My super duper Project.
+  Description :
+  My super duper Project.
+  rpmlib(CompressedFileNames) <= 3.0.4-1
+  rpmlib(PayloadFilesHavePrefix) <= 4.0-1
+  ```
