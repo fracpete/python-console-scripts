@@ -1,8 +1,15 @@
 # python-console-scripts (complex dependencies)
 Example repo for specifying console scripts in Python.
 
-The example code uses Java using [docker-banner-gen](https://pypi.org/project/docker-banner-gen/) 
-to display text in the console but also has a dependency for [numpy](https://pypi.org/project/numpy/).
+The example code uses
+[docker-banner-gen](https://pypi.org/project/docker-banner-gen/) (manually
+installed from a .deb package) to display text in the console but also has a
+dependency for [numpy](https://pypi.org/project/numpy/) (available through the
+distro's package management system).
+
+In this example we show that the package managers aren't perfect and cannot
+account for package that have been manually installed on the system that 
+you are using for packaging.
 
 
 ## Testing
@@ -32,6 +39,16 @@ to display text in the console but also has a dependency for [numpy](https://pyp
   ```
 
 ## Linux packaging
+
+Before **packaging** ensure you have *docker-banner-gen* installed manually from this Debian package:
+
+  https://github.com/waikato-datamining/docker-banner-gen/releases/download/v.0.0.6/python3-docker-banner-gen_0.0.6-1_all.deb
+
+After **packaging** and before **testing** the package, uninstall *docker-banner-gen* again (basically simulating another machine which doesn't have this package installed):
+
+```commandline
+sudo dpkg -r python3-docker-banner-gen
+```
 
 ### stdeb (Debian)
 
@@ -79,7 +96,7 @@ Using [stdeb](https://github.com/astraw/stdeb), you can build Debian packages
   **Note:** The *python3-docker-banner-gen* got added as dependency even though
   this Python package is only available from pypi and not as Debian package.
   
-* when simulating an **apt install** with:
+* when simulating an **apt install** (after uninstalling *docker-banner-gen*) with:
   
   ```commandline
   gdebi --apt-line deb_dist/python3-mysuperduperproject_0.0.1-1_all.deb
@@ -96,7 +113,7 @@ Using [stdeb](https://github.com/astraw/stdeb), you can build Debian packages
   Dependency is not satisfiable: python3-docker-banner-gen
   ```
 
-  You will need to install this package manually (if even available as Debian package).
+  You will need to install the *docker-banner-gen* package manually.
 
 ### py2deb (Debian)
 
@@ -160,7 +177,7 @@ environment first).
   as dependency. The *docker-banner-gen* is automatically assumed to be available
   as package *python3-docker-banner-gen*. 
   
-* when simulating an **apt install** with:
+* when simulating an **apt install** (after uninstalling *docker-banner-gen*) with:
   
   ```commandline
   gdebi --apt-line /tmp/python3-mysuperduperproject_0.0.1_all.deb
@@ -177,7 +194,7 @@ environment first).
   Dependency is not satisfiable: python3-docker-banner-gen
   ```
 
-  You will need to install this package manually (if even available as Debian package).
+  You will need to install the *docker-banner-gen* package manually.
 
   
 ### fpm
@@ -237,7 +254,7 @@ for multiple platforms.
   **Note:** The *docker-banner-gen* is automatically assumed to be available
   as package *python3-docker-banner-gen*. 
   
-* when simulating an **apt install** with:
+* when simulating an **apt install** (after uninstalling *docker-banner-gen*) with:
   
   ```commandline
   gdebi --apt-line python3-mysuperduperproject_0.0.1_all.deb
@@ -254,7 +271,7 @@ for multiple platforms.
   Dependency is not satisfiable: python3-docker-banner-gen
   ```
 
-  You will need to install this package manually (if even available as Debian package).
+  You will need to install the *docker-banner-gen* package manually.
 
 #### RPM
   
